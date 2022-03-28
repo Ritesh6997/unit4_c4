@@ -1,15 +1,13 @@
 const User=require("../model/userModel");
 const jwt = require('jsonwebtoken');
-require('dotenv').config()
-
+require("dotenv").config();
 const generateToken = (user) => {
     return jwt.sign({user}, process.env.SECRET_KEY)
 }
 
 const Register=async(req,res)=>{
     try {
-        let user = User.mongoose.findOne({email:req.body.email});
-        console.log(user)
+        let user = await User.findOne({email:req.body.email});
         if (user){
            return res.status(400).send("email is already exists ")
         } 
